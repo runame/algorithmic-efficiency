@@ -28,7 +28,7 @@ make sure the data directory is mounted to a directory on your host with
 -v flag. If you are following instructions from the README you will have used 
 the `-v $HOME/data:/data` flag in the `docker run` command. This will mount
 the `$HOME/data` directory to the `/data` directory in the container. 
-In this case set --data_dir to  `\data`. 
+In this case set --data_dir to  `/data`. 
 ```bash
 DATA_DIR='/data'
 ```
@@ -96,7 +96,7 @@ Therefore, you will have to specify the framework (pytorch or jax) through thefr
 
 ```bash
 python3 datasets/dataset_setup.py \ 
---data_dir /data \
+--data_dir $DATA_DIR \
 --imagenet \
 --temp_dir $DATA_DIR/tmp \  
 --imagenet_train_url <imagenet_train_url> \
@@ -133,7 +133,7 @@ downloading has finished.
 To download, train a tokenizer and preprocess the librispeech dataset:
 ```bash
 python3 datasets/dataset_setup.py \
---data_dir librispeech \
+--data_dir $DATA_DIR \
 --temp_dir $DATA_DIR/tmp \
 --librispeech
 ```
