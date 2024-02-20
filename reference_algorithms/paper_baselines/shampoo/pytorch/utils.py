@@ -1001,7 +1001,7 @@ class ShampooPreconditioner(DistributedPreconditioner):
     if self._grafting_type == GraftingType.NONE:
       self._grafting = None
     elif self._grafting_type == GraftingType.SGD:
-      self._grafting = SGDGrafting(param)
+      self._grafting = SGDGrafting()
     elif self._grafting_type == GraftingType.ADAGRAD:
       self._grafting = AdagradGrafting(
           param,
@@ -1067,7 +1067,7 @@ class ShampooPreconditioner(DistributedPreconditioner):
           communication_dtype=communication_dtype,
       )
     elif self._grafting_type == GraftingType.LARS:
-      self._grafting = SGDGrafting(param)
+      self._grafting = SGDGrafting()
     elif self._grafting_type == GraftingType.LAMB:
       self._grafting = AdamGrafting(
           param,
@@ -2051,8 +2051,13 @@ def check_diagonal(A: Tensor) -> Tensor:
   m, n = A_shape
   if m != n:
     raise ValueError("Matrix is not square!")
-
-  return ~torch.any(A.reshape(-1)[:-1].reshape(m - 1, n + 1)[:, 1:].bool())
+  print(f'memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB')
+  print(f'max memory allocated: {torch.cuda.max_memory_allocated() / 1e9:.2f} GB')
+  A = A.reshape(-1)[:-1]
+  A = A.reshape(m - 1, n + 1)[:, 1:]
+  A = A.bool()
+  any_true = torch.any(A)
+  return ~any_true
 
 
 def matrix_inverse_root(

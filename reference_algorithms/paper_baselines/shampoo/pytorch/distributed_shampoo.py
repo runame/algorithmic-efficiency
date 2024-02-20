@@ -18,17 +18,17 @@ from torch.autograd import profiler
 import torch.distributed as dist
 from torch.nn import Parameter
 
-from baselines.shampoo.pytorch.utils import AdagradPreconditioner
-from baselines.shampoo.pytorch.utils import BlockShampooPreconditioner
-from baselines.shampoo.pytorch.utils import CommunicationDType
-from baselines.shampoo.pytorch.utils import distribute_buffer_sizes
-from baselines.shampoo.pytorch.utils import DistributedPreconditioner
-from baselines.shampoo.pytorch.utils import flatten_state_dict
-from baselines.shampoo.pytorch.utils import GraftingType
-from baselines.shampoo.pytorch.utils import LargeDimMethod
-from baselines.shampoo.pytorch.utils import OptimizerModule
-from baselines.shampoo.pytorch.utils import ShampooPreconditioner
-from baselines.shampoo.pytorch.utils import split_local_dist_buffers
+from paper_baselines.shampoo.pytorch.utils import AdagradPreconditioner
+from paper_baselines.shampoo.pytorch.utils import BlockShampooPreconditioner
+from paper_baselines.shampoo.pytorch.utils import CommunicationDType
+from paper_baselines.shampoo.pytorch.utils import distribute_buffer_sizes
+from paper_baselines.shampoo.pytorch.utils import DistributedPreconditioner
+from paper_baselines.shampoo.pytorch.utils import flatten_state_dict
+from paper_baselines.shampoo.pytorch.utils import GraftingType
+from paper_baselines.shampoo.pytorch.utils import LargeDimMethod
+from paper_baselines.shampoo.pytorch.utils import OptimizerModule
+from paper_baselines.shampoo.pytorch.utils import ShampooPreconditioner
+from paper_baselines.shampoo.pytorch.utils import split_local_dist_buffers
 
 logger = logging.getLogger(__name__)
 
