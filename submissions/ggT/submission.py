@@ -23,20 +23,22 @@ def init_optimizer_state(workload: spec.Workload,
   del model_state
   del rng
 
+  batch_size = get_batch_size(workload)
+  lr = hyperparameters.learning_rate * batch_size / 128
   optimizer_state = {
       'optimizer':
           LocalOptimizer_GGT(
               model_params,
-              lr=hyperparameters.learning_rate,
+              lr=lr,
               momentum=hyperparameters.momentum,
               damping=hyperparameters.damping,
               beta2=hyperparameters.beta2,
               weight_decay=hyperparameters.weight_decay,
               T=hyperparameters.T,
               lr_cov=hyperparameters.lr_cov,
-              using_matrix_norm=hyperparameters.using_matrix_norm,
+              using_matrix_norm=True,
               warmup_factor=hyperparameters.warmup_factor,
-              batch_size=get_batch_size(workload),
+              batch_size=batch_size,
           )
   }
 
@@ -50,7 +52,9 @@ def init_optimizer_state(workload: spec.Workload,
         optimizer, schedulers=[warmup, cosine_decay], milestones=[warmup_steps])
 
   optimizer_state['scheduler'] = pytorch_cosine_warmup(
-      workload.step_hint * 0.75, hyperparameters, optimizer_state['optimizer'])
+      workload.step_hint * hyperparameters.step_hint_factor,
+      hyperparameters,
+      optimizer_state['optimizer'])
 
   return optimizer_state
 
