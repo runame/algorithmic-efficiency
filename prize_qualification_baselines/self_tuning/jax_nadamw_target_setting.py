@@ -180,7 +180,7 @@ def init_optimizer_state(workload: spec.Workload,
 
   def jax_cosine_warmup(step_hint: int, hyperparameters):
     # Create learning rate schedule.
-    warmup_steps = int(hyperparameters['warmup_factor * step_hint'])
+    warmup_steps = int(hyperparameters['warmup_factor'] * step_hint)
     warmup_fn = optax.linear_schedule(
         init_value=0.,
         end_value=hyperparameters['learning_rate'],
@@ -322,6 +322,10 @@ def get_batch_size(workload_name):
     return 32
   elif workload_name == 'imagenet_resnet':
     return 1024
+  elif workload_name == 'imagenet_resnet_silu':
+    return 512
+  elif workload_name == 'imagenet_resnet_gelu':
+    return 512
   elif workload_name == 'imagenet_vit':
     return 1024
   elif workload_name == 'librispeech_conformer':
