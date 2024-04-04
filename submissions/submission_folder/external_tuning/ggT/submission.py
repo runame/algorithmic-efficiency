@@ -9,7 +9,7 @@ from torch.optim.lr_scheduler import SequentialLR
 
 from algorithmic_efficiency import spec
 from algorithmic_efficiency.pytorch_utils import pytorch_setup
-from submissions.ggT.optimizer import LocalOptimizer_GGT
+from submissions.submission_folder.external_tuning.ggT.optimizer import LocalOptimizer_GGT
 from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWorkload
 from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import WmtWorkload
 from algorithmic_efficiency.workloads.imagenet_resnet.imagenet_pytorch.workload import ImagenetResNetWorkload
