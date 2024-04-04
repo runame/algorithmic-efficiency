@@ -10,6 +10,7 @@ from torch.optim.lr_scheduler import SequentialLR
 from algorithmic_efficiency import spec
 from algorithmic_efficiency.pytorch_utils import pytorch_setup
 from submissions.ggT.optimizer import LocalOptimizer_GGT
+from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWorkload
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -135,8 +136,12 @@ def update_params(workload: spec.Workload,
 
   return (optimizer_state, current_param_container, new_model_state)
 
-
 def get_batch_size(workload_name):
+  if not isinstance(workload_name, str):
+      if isinstance(workload_name, OgbgWorkload):
+          return get_batch_size('ogbg')
+      else:
+          raise ValueError
   # Return the global batch size.
   if workload_name == 'criteo1tb':
     return 262_144
