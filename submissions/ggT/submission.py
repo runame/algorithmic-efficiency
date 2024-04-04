@@ -13,6 +13,7 @@ from submissions.ggT.optimizer import LocalOptimizer_GGT
 from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWorkload
 from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import WmtWorkload
 from algorithmic_efficiency.workloads/imagenet_resnet/imagenet_pytorch/workload import ImagenetResNetWorkload, ImagenetResNetSiLUWorkload, ImagenetResNetGELUWorkload, ImagenetResNetLargeBNScaleWorkload
+from algorithmic_efficiency.workloads.imagenet_vit.imagenet_pytorch.workload import ImagenetVitWorkload, ImagenetVitGluWorkload, ImagenetVitPostLNWorkload, ImagenetVitMapWorkload
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -146,6 +147,8 @@ def get_batch_size(workload_name):
           return get_batch_size('wmt')
       elif isinstance(workload_name, (ImagenetResNetWorkload, ImagenetResNetSiLUWorkload, ImagenetResNetGELUWorkload, ImagenetResNetLargeBNScaleWorkload)):
           return get_batch_size('imagenet_resnet')
+      elif isinstance(workload_name, (ImagenetVitWorkload, ImagenetVitGluWorkload, ImagenetVitPostLNWorkload, ImagenetVitMapWorkload)):
+          return get_batch_size('imagenet_vit')
       else:
           raise ValueError
   # Return the global batch size.
