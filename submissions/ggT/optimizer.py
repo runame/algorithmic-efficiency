@@ -141,7 +141,7 @@ class LocalOptimizer_GGT(optim.Optimizer):
           if param.requires_grad and param.data_ptr() in tmp:
             self.discount_factor.add(tmp[param.data_ptr()])
 
-    logging.info(f"Discount factor: {self.discount_factor}")
+    #logging.info(f"Discount factor: {self.discount_factor}")
     return params
 
   def get_H_values(
@@ -385,8 +385,8 @@ class LocalOptimizer_GGT(optim.Optimizer):
     assert len(block) == 1
     W = torch.squeeze(block[0].grad)
     assert W is not None
-    if W.dim() > 2 and self.steps == 0:
-      logging.info(f"{W.shape}, {key}")
+    # if W.dim() > 2 and self.steps == 0:
+    #   logging.info(f"{W.shape}, {key}")
 
 
 ################################
@@ -512,7 +512,7 @@ class LocalOptimizer_GGT(optim.Optimizer):
     if self.steps == self.next_step:
       diff = min(max(int(math.log(self.steps + 1, 4)), 1), self.T)
       self.next_step = diff + self.steps
-      logging.info(f'next step is {self.next_step} {diff} {self.steps}')
+      #logging.info(f'next step is {self.next_step} {diff} {self.steps}')
 
     self._step()
     self.steps += 1
