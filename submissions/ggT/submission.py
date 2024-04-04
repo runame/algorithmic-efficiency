@@ -12,7 +12,7 @@ from algorithmic_efficiency.pytorch_utils import pytorch_setup
 from submissions.ggT.optimizer import LocalOptimizer_GGT
 from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWorkload
 from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import WmtWorkload
-from algorithmic_efficiency.workloads/imagenet_resnet/imagenet_pytorch/workload import ImagenetResNetWorkload
+from algorithmic_efficiency.workloads.imagenet_resnet.imagenet_pytorch.workload import ImagenetResNetWorkload
 from algorithmic_efficiency.workloads.imagenet_vit.imagenet_pytorch.workload import ImagenetVitWorkload
 from algorithmic_efficiency.workloads.librispeech_conformer.librispeech_pytorch.workload import LibriSpeechConformerWorkload
 from algorithmic_efficiency.workloads.librispeech_deepspeech.librispeech_pytorch.workload import LibriSpeechDeepSpeechWorkload
@@ -143,6 +143,7 @@ def update_params(workload: spec.Workload,
                  grad_norm.item())
 
   return (optimizer_state, current_param_container, new_model_state)
+
 
 def get_batch_size(workload_name):
   if not isinstance(workload_name, str):
