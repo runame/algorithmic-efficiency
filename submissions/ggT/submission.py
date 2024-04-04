@@ -11,6 +11,7 @@ from algorithmic_efficiency import spec
 from algorithmic_efficiency.pytorch_utils import pytorch_setup
 from submissions.ggT.optimizer import LocalOptimizer_GGT
 from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWorkload
+from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import WmtWorkload
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -140,6 +141,8 @@ def get_batch_size(workload_name):
   if not isinstance(workload_name, str):
       if isinstance(workload_name, OgbgWorkload):
           return get_batch_size('ogbg')
+      elif isinstance(workload_name, WmtWorkload):
+          return get_batch_size('wmt')
       else:
           raise ValueError
   # Return the global batch size.
