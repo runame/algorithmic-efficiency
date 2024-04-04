@@ -388,11 +388,10 @@ class LocalOptimizer_GGT(optim.Optimizer):
     # if W.dim() > 2 and self.steps == 0:
     #   logging.info(f"{W.shape}, {key}")
 
-
-################################
-# W = W.view(len(W), -1)
-# W = torch.squeeze(W)
-################################
+    ################################
+    # W = W.view(len(W), -1)
+    # W = torch.squeeze(W)
+    ################################
     assert torch.isfinite(W).all()
 
     return W.to(dtype=cast_dtype)

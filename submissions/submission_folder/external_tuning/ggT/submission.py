@@ -9,16 +9,26 @@ from torch.optim.lr_scheduler import SequentialLR
 
 from algorithmic_efficiency import spec
 from algorithmic_efficiency.pytorch_utils import pytorch_setup
-from submissions.submission_folder.external_tuning.ggT.optimizer import LocalOptimizer_GGT
-from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWorkload
-from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import WmtWorkload
-from algorithmic_efficiency.workloads.imagenet_resnet.imagenet_pytorch.workload import ImagenetResNetWorkload
-from algorithmic_efficiency.workloads.imagenet_vit.imagenet_pytorch.workload import ImagenetVitWorkload
-from algorithmic_efficiency.workloads.librispeech_conformer.librispeech_pytorch.workload import LibriSpeechConformerWorkload
-from algorithmic_efficiency.workloads.librispeech_deepspeech.librispeech_pytorch.workload import LibriSpeechDeepSpeechWorkload
-from algorithmic_efficiency.workloads.criteo1tb.criteo1tb_pytorch.workload import Criteo1TbDlrmSmallWorkload
-from algorithmic_efficiency.workloads.fastmri.fastmri_pytorch.workload import FastMRIWorkload
-from algorithmic_efficiency.workloads.mnist.mnist_pytorch.workload import MnistWorkload
+from algorithmic_efficiency.workloads.criteo1tb.criteo1tb_pytorch.workload import \
+    Criteo1TbDlrmSmallWorkload
+from algorithmic_efficiency.workloads.fastmri.fastmri_pytorch.workload import \
+    FastMRIWorkload
+from algorithmic_efficiency.workloads.imagenet_resnet.imagenet_pytorch.workload import \
+    ImagenetResNetWorkload
+from algorithmic_efficiency.workloads.imagenet_vit.imagenet_pytorch.workload import \
+    ImagenetVitWorkload
+from algorithmic_efficiency.workloads.librispeech_conformer.librispeech_pytorch.workload import \
+    LibriSpeechConformerWorkload
+from algorithmic_efficiency.workloads.librispeech_deepspeech.librispeech_pytorch.workload import \
+    LibriSpeechDeepSpeechWorkload
+from algorithmic_efficiency.workloads.mnist.mnist_pytorch.workload import \
+    MnistWorkload
+from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import \
+    OgbgWorkload
+from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import \
+    WmtWorkload
+from submissions.submission_folder.external_tuning.ggT.optimizer import \
+    LocalOptimizer_GGT
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -147,26 +157,26 @@ def update_params(workload: spec.Workload,
 
 def get_batch_size(workload_name):
   if not isinstance(workload_name, str):
-      if isinstance(workload_name, OgbgWorkload):
-          return get_batch_size('ogbg')
-      elif isinstance(workload_name, WmtWorkload):
-          return get_batch_size('wmt')
-      elif isinstance(workload_name, ImagenetResNetWorkload):
-          return get_batch_size('imagenet_resnet')
-      elif isinstance(workload_name, ImagenetVitWorkload):
-          return get_batch_size('imagenet_vit')
-      elif isinstance(workload_name, LibriSpeechConformerWorkload):
-          return get_batch_size('librispeech_conformer')
-      elif isinstance(workload_name, LibriSpeechDeepSpeechWorkload):
-          return get_batch_size('librispeech_deepspeech')
-      elif isinstance(workload_name, Criteo1TbDlrmSmallWorkload):
-          return get_batch_size('criteo1tb')
-      elif isinstance(workload_name, FastMRIWorkload):
-          return get_batch_size('fastmri')
-      elif isinstance(workload_name, MnistWorkload):
-          return get_batch_size('mnist')
-      else:
-          raise ValueError
+    if isinstance(workload_name, OgbgWorkload):
+      return get_batch_size('ogbg')
+    elif isinstance(workload_name, WmtWorkload):
+      return get_batch_size('wmt')
+    elif isinstance(workload_name, ImagenetResNetWorkload):
+      return get_batch_size('imagenet_resnet')
+    elif isinstance(workload_name, ImagenetVitWorkload):
+      return get_batch_size('imagenet_vit')
+    elif isinstance(workload_name, LibriSpeechConformerWorkload):
+      return get_batch_size('librispeech_conformer')
+    elif isinstance(workload_name, LibriSpeechDeepSpeechWorkload):
+      return get_batch_size('librispeech_deepspeech')
+    elif isinstance(workload_name, Criteo1TbDlrmSmallWorkload):
+      return get_batch_size('criteo1tb')
+    elif isinstance(workload_name, FastMRIWorkload):
+      return get_batch_size('fastmri')
+    elif isinstance(workload_name, MnistWorkload):
+      return get_batch_size('mnist')
+    else:
+      raise ValueError
   # Return the global batch size.
   if workload_name == 'criteo1tb':
     return 262_144
