@@ -1,4 +1,5 @@
-from typing import Iterator
+from typing i
+mport Iterator
 
 from absl import logging
 import torch
@@ -14,6 +15,8 @@ from algorithmic_efficiency.workloads.ogbg.ogbg_pytorch.workload import OgbgWork
 from algorithmic_efficiency.workloads.wmt.wmt_pytorch.workload import WmtWorkload
 from algorithmic_efficiency.workloads/imagenet_resnet/imagenet_pytorch/workload import ImagenetResNetWorkload, ImagenetResNetSiLUWorkload, ImagenetResNetGELUWorkload, ImagenetResNetLargeBNScaleWorkload
 from algorithmic_efficiency.workloads.imagenet_vit.imagenet_pytorch.workload import ImagenetVitWorkload, ImagenetVitGluWorkload, ImagenetVitPostLNWorkload, ImagenetVitMapWorkload
+from algorithmic_efficiency.workloads.librispeech_conformer.librispeech_pytorch.workload import LibriSpeechConformerWorkload, LibriSpeechConformerAttentionTemperatureWorkload, LibriSpeechConformerLayerNormWorkload, LibriSpeechConformerGeluWorkload
+from algorithmic_efficiency.workloads.librispeech_deepspeech.librispeech_pytorch.workload import LibriSpeechDeepSpeechWorkload, LibriSpeechDeepSpeechTanhWorkload, LibriSpeechDeepSpeechNoResNetWorkload, LibriSpeechDeepSpeechNormAndSpecAugWorkload
 
 USE_PYTORCH_DDP = pytorch_setup()[0]
 
@@ -149,6 +152,10 @@ def get_batch_size(workload_name):
           return get_batch_size('imagenet_resnet')
       elif isinstance(workload_name, (ImagenetVitWorkload, ImagenetVitGluWorkload, ImagenetVitPostLNWorkload, ImagenetVitMapWorkload)):
           return get_batch_size('imagenet_vit')
+      elif isinstance(workload_name, (LibriSpeechConformerWorkload, LibriSpeechConformerAttentionTemperatureWorkload, LibriSpeechConformerLayerNormWorkload, LibriSpeechConformerGeluWorkload)):
+          return get_batch_size('librispeech_conformer')
+      elif isinstance(workload_name, (LibriSpeechDeepSpeechWorkload, LibriSpeechDeepSpeechTanhWorkload, LibriSpeechDeepSpeechNoResNetWorkload, LibriSpeechDeepSpeechNormAndSpecAugWorkload)):
+          return get_batch_size('librispeech_deepspeech')
       else:
           raise ValueError
   # Return the global batch size.
