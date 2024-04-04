@@ -1,6 +1,6 @@
 {
   "learning_rate": {
-      "min": 1e-4, "max": 1e-3, "scaling": "log"
+      "min": 1e-4, "max": 5e-3, "scaling": "log"
   },
   "momentum": {
       "min": 0.9, "max": 0.99, "scaling": "linear"
@@ -15,7 +15,7 @@
       "min": 1e-5, "max": 1e-2, "scaling": "log"
   },
   "lr_cov": {
-      "min": 8e-2, "max": 4e-1, "scaling": "log"
+      "min": 8e-3, "max": 4e-1, "scaling": "log"
   },
   "T": {
       "feasible_points": [10]
