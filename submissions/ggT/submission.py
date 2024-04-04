@@ -1,6 +1,4 @@
-from typing
-i
-mport Iterator
+from typing import Iterator
 
 from absl import logging
 import torch
