@@ -8,7 +8,7 @@
 
 # NOTE1 Before being able to run this, you need to carry out the data preparation:
 # 1) Create a folder `data`: `mkdir data`
-# 2) Download the data set: `python3 datasets/dataset_setup.py --data_dir data/ --ogbg1`
+# 2) Download the data set: `python3 datasets/dataset_setup.py --data_dir data/ --ogbg`
 #
 # NOTE2 To use more GPUs change `--gres=gpu:X` above, and `nproc_per_node=X` to a larger number
 torchrun --redirects 1:0,2:0,3:0,4:0,5:0,6:0,7:0 --standalone --nnodes=1 --nproc_per_node=2 submission_runner.py \
