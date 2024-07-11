@@ -1,0 +1,1 @@
+sirfshampoo @ git+https://git.github.com/f-dangel/sirfshampoo.git@66bb204dabfe5f1d3ef5ee0057cb8ac8562f5d22
