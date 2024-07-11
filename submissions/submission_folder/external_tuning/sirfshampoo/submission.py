@@ -1,8 +1,8 @@
 from typing import Iterator
 
 from absl import logging
-from sirfshampoo.utils import set_up_param_groups_for_algoperf
 from sirfshampoo import SIRFShampoo
+from sirfshampoo.utils import set_up_param_groups_for_algoperf
 import torch
 import torch.distributed.nn as dist_nn
 from torch.optim.lr_scheduler import CosineAnnealingLR
@@ -61,6 +61,7 @@ def init_optimizer_state(
             kappa=hyperparameters.weight_decay,
             T=hyperparameters.T,
             beta2=hyperparameters.lr_cov,
+            batch_size=batch_size,
         )
     }
 
