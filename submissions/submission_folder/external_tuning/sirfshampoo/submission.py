@@ -1,7 +1,7 @@
 from typing import Iterator
 
 from absl import logging
-from sirfhshampoo.utils import set_up_param_groups_for_algoperf
+from sirfshampoo.utils import set_up_param_groups_for_algoperf
 from sirfshampoo import SIRFShampoo
 import torch
 import torch.distributed.nn as dist_nn
