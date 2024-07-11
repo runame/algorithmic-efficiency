@@ -23,6 +23,9 @@
   "step_hint_factor": {
       "feasible_points": [0.5625]
   },
+  "warmup_factor": {
+    "feasible_points": [0.05]
+  },
   "label_smoothing": {
       "feasible_points": [0.1, 0.2]
   },
