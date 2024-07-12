@@ -45,6 +45,12 @@ WORKLOADS_AND_DATA_PATHS=(
     # "wmt_attention_temp wmt"
     # "wmt_glu_tanh wmt"
 )
+
+if [ ${SLURM_ARRAY_TASK_ID} -ge ${#WORKLOADS_AND_DATA_PATHS[@]} ]; then
+    echo "SLURM_ARRAY_TASK_ID (${SLURM_ARRAY_TASK_ID}) is out of bounds."
+    exit
+fi
+
 WORKLOAD_AND_DATA_PATH=${WORKLOADS_AND_DATA_PATHS[$SLURM_ARRAY_TASK_ID]}
 WORKLOAD="${WORKLOAD_AND_DATA_PATH% *}"
 DATAPATH="${WORKLOAD_AND_DATA_PATH#* }"
