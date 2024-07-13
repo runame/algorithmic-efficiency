@@ -12,11 +12,8 @@
 #    - `mkdir data/imagenet`
 #    - `ln -s /datasets/imagenet/train data/imagenet/train`
 #    - `ln -s /datasets/imagenet/val data/imagenet/val`
-# 3) NOTE The first time you run an ImageNet workload, it will download another
-#    data set (ImageNetV2) into `data/imagenet/imagenetv2` (size < 2.0 GiB).
-#    Make sure you call a workload for the first time using ONLY ONE GPU, otherwise
-#    all GPUs will simultaneously try to download and extract the data set, which will
-#    cause errors.
+# 3) Download ImageNetV2: `python download_imagenet_v2.py --data-dir=data/imagenet`
+#    The data set takes less than 2 GiB of memory.
 #
 # NOTE2 To use more GPUs change `--gres=gpu:X` above, and `nproc_per_node=X` to a larger number
 torchrun --redirects 1:0,2:0,3:0,4:0,5:0,6:0,7:0 --standalone --nnodes=1 --nproc_per_node=2 submission_runner.py \
