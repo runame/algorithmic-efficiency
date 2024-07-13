@@ -245,7 +245,12 @@ def get_eval_batch_size(workload_name):
     # Return the global eval batch size.
     if workload_name == "criteo1tb":
         return 524288
-    elif workload_name == "fastmri":
+    elif workload_name in {
+        "fastmri",
+        "fastmri_model_size",
+        "fastmri_tanh",
+        "fastmri_layernorm",
+    }:
         # use smaller batch size for evaluation when running on Vector cluster
         return (
             256 // 2
