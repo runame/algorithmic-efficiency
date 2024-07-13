@@ -7,6 +7,10 @@
 #SBATCH --mem-per-cpu=8G
 #SBATCH --array=0-35
 
+# NOTE This will use smaller batch sizes to fit on Vector's A40 GPUs.
+# Set this value to 0 if you are using GPUs with more than 48 GiB RAM.
+export RUNNING_ON_VECTOR_CLUSTER=1
+
 # NOTE Make sure you have all data sets set up properly
 
 WORKLOADS_AND_DATA_PATHS=(

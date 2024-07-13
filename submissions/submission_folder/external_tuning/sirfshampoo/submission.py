@@ -1,3 +1,4 @@
+import os
 from typing import Iterator
 
 from absl import logging
@@ -173,6 +174,7 @@ def update_params(
 
 
 def get_batch_size(workload_name):
+    # TODO Add CIFAR workload
     if not isinstance(workload_name, str):
         if isinstance(workload_name, OgbgWorkload):
             return get_batch_size("ogbg")
@@ -213,6 +215,57 @@ def get_batch_size(workload_name):
         return 128
     elif workload_name == "mnist":
         return 16
+    else:
+        raise ValueError(f"Unsupported workload name: {workload_name}.")
+
+
+def get_eval_batch_size(workload_name):
+    # TODO Add CIFAR workload
+    if not isinstance(workload_name, str):
+        if isinstance(workload_name, OgbgWorkload):
+            return get_eval_batch_size("ogbg")
+        elif isinstance(workload_name, WmtWorkload):
+            return get_eval_batch_size("wmt")
+        elif isinstance(workload_name, ImagenetResNetWorkload):
+            return get_eval_batch_size("imagenet_resnet")
+        elif isinstance(workload_name, ImagenetVitWorkload):
+            return get_eval_batch_size("imagenet_vit")
+        elif isinstance(workload_name, LibriSpeechConformerWorkload):
+            return get_eval_batch_size("librispeech_conformer")
+        elif isinstance(workload_name, LibriSpeechDeepSpeechWorkload):
+            return get_eval_batch_size("librispeech_deepspeech")
+        elif isinstance(workload_name, Criteo1TbDlrmSmallWorkload):
+            return get_eval_batch_size("criteo1tb")
+        elif isinstance(workload_name, FastMRIWorkload):
+            return get_eval_batch_size("fastmri")
+        elif isinstance(workload_name, MnistWorkload):
+            return get_eval_batch_size("mnist")
+        else:
+            raise ValueError
+    # Return the global eval batch size.
+    if workload_name == "criteo1tb":
+        return 524288
+    elif workload_name == "fastmri":
+        # use smaller batch size for evaluation when running on Vector cluster
+        return (
+            256 // 2
+            if int(os.environ.get("RUNNING_ON_VECTOR_CLUSTER", default=0)) == 1
+            else 256
+        )
+    elif workload_name == "imagenet_resnet":
+        return 1024
+    elif workload_name == "imagenet_vit":
+        return 2048
+    elif workload_name == "librispeech_conformer":
+        return 256
+    elif workload_name == "librispeech_deepspeech":
+        return 256
+    elif workload_name == "ogbg":
+        return 32768
+    elif workload_name == "wmt":
+        return 128
+    elif workload_name == "mnist":
+        return 10000
     else:
         raise ValueError(f"Unsupported workload name: {workload_name}.")
 
