@@ -199,8 +199,20 @@ def get_batch_size(workload_name):
     # Return the global batch size.
     if workload_name == "criteo1tb":
         return 262_144
-    elif workload_name == "fastmri":
-        return 32
+    elif workload_name in {
+        "fastmri",
+        "fastmri_model_size",
+        "fastmri_tanh",
+        "fastmri_layernorm",
+    }:
+        # use smaller batch size for evaluation when running on Vector cluster
+        batch_size = (
+            32 // 2
+            if int(os.environ.get("RUNNING_ON_VECTOR_CLUSTER", default=0)) == 1
+            else 32
+        )
+        print(f"Global batch size: {batch_size}")
+        return batch_size
     elif workload_name == "imagenet_resnet":
         return 1024
     elif workload_name == "imagenet_vit":
@@ -252,11 +264,13 @@ def get_eval_batch_size(workload_name):
         "fastmri_layernorm",
     }:
         # use smaller batch size for evaluation when running on Vector cluster
-        return (
+        batch_size = (
             256 // 2
             if int(os.environ.get("RUNNING_ON_VECTOR_CLUSTER", default=0)) == 1
             else 256
         )
+        print(f"Global eval batch size: {batch_size}")
+        return batch_size
     elif workload_name == "imagenet_resnet":
         return 1024
     elif workload_name == "imagenet_vit":
