@@ -207,7 +207,7 @@ def get_batch_size(workload_name):
     }:
         # use smaller batch size for evaluation when running on Vector cluster
         batch_size = (
-            32 // 2
+            32 // 4
             if int(os.environ.get("RUNNING_ON_VECTOR_CLUSTER", default=0)) == 1
             else 32
         )
@@ -265,7 +265,7 @@ def get_eval_batch_size(workload_name):
     }:
         # use smaller batch size for evaluation when running on Vector cluster
         batch_size = (
-            256 // 2
+            256 // 4
             if int(os.environ.get("RUNNING_ON_VECTOR_CLUSTER", default=0)) == 1
             else 256
         )
