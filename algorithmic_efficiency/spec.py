@@ -318,7 +318,7 @@ class Workload(metaclass=abc.ABCMeta):
                  imagenet_v2_data_dir: Optional[str],
                  global_step: int) -> Dict[str, float]:
     """Run a full evaluation of the model."""
-    logging.info('Evaluating on the training split.')
+    logging.info(f'Evaluating on the training split (B={global_batch_size}).')
     train_metrics = self._eval_model_on_split(
         split='eval_train',
         num_examples=self.num_eval_train_examples,
@@ -328,9 +328,10 @@ class Workload(metaclass=abc.ABCMeta):
         rng=rng,
         data_dir=data_dir,
         global_step=global_step)
+    logging.info("Finished evaluating on training split.")
     eval_metrics = {'train/' + k: v for k, v in train_metrics.items()}
     # We always require a validation set.
-    logging.info('Evaluating on the validation split.')
+    logging.info(f'Evaluating on the validation split (B={global_batch_size}).')
     validation_metrics = self._eval_model_on_split(
         'validation',
         num_examples=self.num_validation_examples,
@@ -340,13 +341,14 @@ class Workload(metaclass=abc.ABCMeta):
         rng=rng,
         data_dir=data_dir,
         global_step=global_step)
+    logging.info("Finished evaluating on validation split.")
     for k, v in validation_metrics.items():
       eval_metrics['validation/' + k] = v
     eval_metrics['validation/num_examples'] = self.num_validation_examples
     # Evaluate on the test set. TODO(znado): always eval on the test set.
     try:
       if self.num_test_examples is not None:
-        logging.info('Evaluating on the test split.')
+        logging.info(f'Evaluating on the test split (B={global_batch_size}).')
         test_metrics = self._eval_model_on_split(
             'test',
             num_examples=self.num_test_examples,
@@ -359,6 +361,7 @@ class Workload(metaclass=abc.ABCMeta):
         for k, v in test_metrics.items():
           eval_metrics['test/' + k] = v
         eval_metrics['test/num_examples'] = self.num_test_examples
+        logging.info("Finished evaluating on test split.")
     except NotImplementedError:
       pass
 

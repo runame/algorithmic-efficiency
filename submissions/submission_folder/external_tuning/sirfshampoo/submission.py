@@ -217,19 +217,19 @@ def get_batch_size(workload_name):
         "imagenet_resnet_gelu",
         "imagenet_resnet_large_bn_init",
     }:
-        batch_size = 1024 // 8 if on_vector_cluster else 1024
+        batch_size = 1024 // 32 if on_vector_cluster else 1024
     elif workload_name in {
         "imagenet_vit",
         "imagenet_vit_glu",
         "imagenet_vit_post_ln",
         "imagenet_vit_map",
     }:
-        batch_size = 1024 // 8 if on_vector_cluster else 1024
+        batch_size = 1024 // 32 if on_vector_cluster else 1024
     elif workload_name in {
         "librispeech_conformer",
         "librispeech_deepspeech",
     }:
-        batch_size = 256 // 8 if on_vector_cluster else 256
+        batch_size = 256
     elif workload_name == "ogbg":
         batch_size = 512
     elif workload_name == "wmt":
@@ -239,7 +239,7 @@ def get_batch_size(workload_name):
     else:
         raise ValueError(f"Unsupported workload name: {workload_name}.")
 
-    print(f"Global batch size: {batch_size}")
+    logging.info(f"Global batch size: {batch_size}")
     return batch_size
 
 
@@ -279,26 +279,26 @@ def get_eval_batch_size(workload_name):
         "fastmri_tanh",
         "fastmri_layernorm",
     }:
-        batch_size = 256 // 16 if on_vector_cluster else 256
+        batch_size = 256 // 64 if on_vector_cluster else 256
     elif workload_name in {
         "imagenet_resnet",
         "imagenet_resnet_silu",
         "imagenet_resnet_gelu",
         "imagenet_resnet_large_bn_init",
     }:
-        batch_size = 1024 // 8 if on_vector_cluster else 1024
+        batch_size = 1024 // 256 if on_vector_cluster else 1024
     elif workload_name in {
         "imagenet_vit",
         "imagenet_vit_glu",
         "imagenet_vit_post_ln",
         "imagenet_vit_map",
     }:
-        batch_size =  2048 // 8 if on_vector_cluster else 2048
+        batch_size =  2048 // 512 if on_vector_cluster else 2048
     elif workload_name in {
         "librispeech_conformer",
         "librispeech_deepspeech",
     }:
-        batch_size =  256 // 8 if on_vector_cluster else 256
+        batch_size =  256
     elif workload_name == "ogbg":
         batch_size =  32768
     elif workload_name == "wmt":
@@ -308,7 +308,7 @@ def get_eval_batch_size(workload_name):
     else:
         raise ValueError(f"Unsupported workload name: {workload_name}.")
 
-    print(f"Global eval batch size: {batch_size}")
+    logging.info(f"Global eval batch size: {batch_size}")
     return batch_size
 
 

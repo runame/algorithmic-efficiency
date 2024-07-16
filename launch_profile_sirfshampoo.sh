@@ -4,8 +4,8 @@
 #SBATCH --gres=gpu:4
 #SBATCH --cpus-per-task=4
 #SBATCH --time=02:00:00
-#SBATCH --mem-per-cpu=8G
 #SBATCH --array=0-35
+#SBATCH --mem-per-cpu=32G
 
 # NOTE This will use smaller batch sizes to fit on Vector's A40 GPUs.
 # Set this value to 0 if you are using GPUs with more than 48 GiB RAM.
