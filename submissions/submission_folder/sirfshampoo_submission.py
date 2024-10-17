@@ -24,7 +24,7 @@ def init_optimizer_state(workload: spec.Workload,
                          model_state: spec.ModelAuxiliaryState,
                          hyperparameters: spec.Hyperparameters,
                          rng: spec.RandomState) -> spec.OptimizerState:
-  """Creates a NAdamW optimizer and a learning rate schedule."""
+  """Creates a SIRFShampoo optimizer and a learning rate scheduler."""
   del model_state
   del rng
 
