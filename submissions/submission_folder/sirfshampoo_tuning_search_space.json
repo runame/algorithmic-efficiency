@@ -1,0 +1,32 @@
+{
+    "lr": {
+        "feasible_points": [1e-3]
+    },
+    "beta2": {
+        "feasible_points": [0.01]
+    },
+    "alpha1": {
+        "feasible_points": [0.9]
+    },
+    "alpha2": {
+        "feasible_points": [0.5]
+    },
+    "lam": {
+        "feasible_points": [1e-3]
+    },
+    "kappa": {
+        "feasible_points": [0.0]
+    },
+    "T": {
+        "feasible_points": [1]
+    },
+    "warmup_factor": {
+        "feasible_points": [0.05]
+    },
+    "label_smoothing": {
+        "feasible_points": [0.2]
+    },
+    "dropout_rate": {
+        "feasible_points": [0.0]
+    }
+}
