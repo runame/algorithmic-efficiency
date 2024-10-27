@@ -219,7 +219,12 @@ def _generate_discrete_point(name: str,
                              feasible_points: Sequence[Any],
                              halton_point: float) -> Any:
   """Generate a discrete hyperparameter value from a Halton sequence point."""
-  index = int(math.floor(halton_point * len(feasible_points)))
+  try:
+    length = len(feasible_points)
+  except TypeError:
+    feasible_points = (feasible_points,)
+    length = 1
+  index = int(math.floor(halton_point * length))
   return name, feasible_points[index]
 
 
