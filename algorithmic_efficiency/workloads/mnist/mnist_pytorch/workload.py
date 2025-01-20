@@ -127,7 +127,10 @@ class MnistWorkload(BaseMnistWorkload):
     del aux_dropout_rate
 
     if hasattr(self, '_model'):
-      self._model.reset_parameters()
+      if isinstance(self._model, torch.nn.DataParallel):
+        self._model.module.reset_parameters()
+      else:
+        self._model.reset_parameters()
       return self._model, None
 
     torch.random.manual_seed(rng[0])
