@@ -8,7 +8,7 @@ import torch
 from torch import nn
 import torch.distributed as dist
 import torch.nn.functional as F
-from torch.nn.parallel import DistributedDataParallel as DDP
+from torch.distributed._composable.fsdp import fully_shard
 
 from algorithmic_efficiency import init_utils
 from algorithmic_efficiency import param_utils
@@ -16,7 +16,7 @@ from algorithmic_efficiency import spec
 from algorithmic_efficiency.pytorch_utils import pytorch_setup
 from algorithmic_efficiency.workloads.mnist.workload import BaseMnistWorkload
 
-USE_PYTORCH_DDP, RANK, DEVICE, N_GPUS = pytorch_setup()
+USE_PYTORCH_FSDP2, RANK, DEVICE, N_GPUS = pytorch_setup()
 
 
 class _Model(nn.Module):
@@ -82,7 +82,7 @@ class MnistWorkload(BaseMnistWorkload):
         else:
           weights = torch.ones_like(targets, dtype=torch.bool, device=DEVICE)
         # Send batch to other devices when using DDP.
-        if USE_PYTORCH_DDP:
+        if USE_PYTORCH_FSDP2:
           dist.broadcast(inputs, src=0)
           inputs = inputs[0]
           dist.broadcast(targets, src=0)
@@ -127,10 +127,7 @@ class MnistWorkload(BaseMnistWorkload):
     del aux_dropout_rate
 
     if hasattr(self, '_model'):
-      if isinstance(self._model, (DDP, torch.nn.DataParallel)):
-        self._model.module.reset_parameters()
-      else:
-        self._model.reset_parameters()
+      self._model.reset_parameters()
       return self._model, None
 
     torch.random.manual_seed(rng[0])
@@ -139,8 +136,8 @@ class MnistWorkload(BaseMnistWorkload):
     self._param_types = param_utils.pytorch_param_types(self._param_shapes)
     self._model.to(DEVICE)
     if N_GPUS > 1:
-      if USE_PYTORCH_DDP:
-        self._model = DDP(self._model, device_ids=[RANK], output_device=RANK)
+      if USE_PYTORCH_FSDP2:
+        self._model = fully_shard(self._model)
       else:
         self._model = torch.nn.DataParallel(self._model)
     return self._model, None
@@ -229,7 +226,7 @@ class MnistWorkload(BaseMnistWorkload):
   def _normalize_eval_metrics(
       self, num_examples: int, total_metrics: Dict[str,
                                                    Any]) -> Dict[str, float]:
-    if USE_PYTORCH_DDP:
+    if USE_PYTORCH_FSDP2:
       for metric in total_metrics.values():
         dist.all_reduce(metric)
     return {k: float(v.item() / num_examples) for k, v in total_metrics.items()}
