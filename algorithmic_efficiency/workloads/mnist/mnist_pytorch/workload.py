@@ -7,8 +7,8 @@ from typing import Any, Dict, Iterator, Optional, Tuple
 import torch
 from torch import nn
 import torch.distributed as dist
-import torch.nn.functional as F
 from torch.distributed._composable.fsdp import fully_shard
+import torch.nn.functional as F
 
 from algorithmic_efficiency import init_utils
 from algorithmic_efficiency import param_utils
